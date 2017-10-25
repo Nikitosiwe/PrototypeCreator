@@ -20,10 +20,10 @@ ApplicationWindow {
         rows: 2
         anchors.fill: parent
 
-
         //Панель элементов
         Rectangle{
-            width: 100
+            width: 200
+            z:1
             anchors{
                 top: parent.top
                 bottom: parent.bottom
@@ -32,62 +32,24 @@ ApplicationWindow {
 
             //Список элементов
             ListView {
-                  id: view
+                id: view
 
-                  anchors.margins: 10
-                  anchors.fill: parent
-                  spacing: 10
-                  //ElementsModel - модель в отдельном файле
-                  model: ElementsModel{}
-                  clip: true
+                anchors { left: parent.left; top: parent.top; bottom: parent.bottom; margins: 2 }
+                width: 100
 
-                  //Объект для выделения выбраного эелемнта в списке
-                  highlight: Rectangle {
-                      color: "skyblue"
-                  }
-                  highlightFollowsCurrentItem: true
+                model: ElementsModel{}
+                delegate:ElementDelegate{}
 
-
-                  //Объект который будет создаваться на каждый объект модели
-                  delegate: Item {
-                      id: listDelegate
-
-                      property var view: ListView.view
-                      property var isCurrent: ListView.isCurrentItem
-
-                      width: view.width
-                      height: 40
-
-                      Rectangle {
-                          anchors.margins: 5
-                          anchors.fill: parent
-                          radius: height / 2
-                          color: model.color
-                          border {
-                              color: "black"
-                              width: 1
-                          }
-
-                          Text {
-                              anchors.centerIn: parent
-                              renderType: Text.NativeRendering
-                              text: "%1%2".arg(model.text).arg(isCurrent ? " *" : "")
-                          }
-
-                          //При клике на елемент текущий индекс списка изменяется
-                          MouseArea {
-                              anchors.fill: parent
-                              onClicked: view.currentIndex = model.index
-                          }
-                      }
-                  }
-              }
+                spacing: 4
+                cacheBuffer: 50
+            }
         }
 
 
         //Пространство для проектирования прототипа
         Rectangle{
             Layout.fillWidth: true
+            z:0
             width:200
             height: 100
             anchors{
@@ -95,6 +57,20 @@ ApplicationWindow {
                 bottom: parent.bottom
             }
             color: "white"
+
+            DropArea {
+                id: dragTarget
+                anchors.fill: parent
+
+                onEntered: {
+                    parent.color = "green"
+                }
+                onExited: {
+                    parent.color = "red"
+                }
+            }
+
+
         }
     }
 

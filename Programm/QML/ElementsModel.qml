@@ -6,19 +6,12 @@ ListModel {
        id: dataModel
 
        ListElement {
+           color: "grey"
+           name: "Прямоугольник"
+       }
+       ListElement {
            color: "orange"
-           text: "first"
+           name: "Текст"
        }
-       ListElement {
-           color: "lightgreen"
-           text: "second"
-       }
-       ListElement {
-           color: "orchid"
-           text: "third"
-       }
-       ListElement {
-           color: "tomato"
-           text: "fourth"
-       }
+
    }
