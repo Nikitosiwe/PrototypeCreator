@@ -4,16 +4,16 @@ import QtQuick 2.0
 //Делегат для елементов списка
 Item {
     id: root
-    width: dragArea.width
-    height: dragArea.height
+    width: parent.width
+    height: 50
     MouseArea {
         id: dragArea
 
         property bool held: false
 
         anchors { left: parent.left; right: parent.right }
-        height: content.height
-        width: content.width
+        height: parent.height
+        width: parent.width
 
         drag.target: held ? content : undefined
         drag.axis: Drag.XandYAxis
@@ -28,11 +28,13 @@ Item {
             id: content
 
             Drag.active: dragArea.drag.active
+            Drag.hotSpot.x: parent.width/2
+            Drag.hotSpot.y: parent.height/2
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 verticalCenter: parent.verticalCenter
             }
-            width: 50; height: 50
+            width: parent.width; height: parent.height
 
             border.width: 1
             border.color: "lightsteelblue"

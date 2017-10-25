@@ -34,7 +34,7 @@ ApplicationWindow {
             ListView {
                 id: view
 
-                anchors { left: parent.left; top: parent.top; bottom: parent.bottom; margins: 2 }
+                anchors { fill: parent; left: parent.left; top: parent.top; bottom: parent.bottom; margins: 2 }
                 width: 100
 
                 model: ElementsModel{}
