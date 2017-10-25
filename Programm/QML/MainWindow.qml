@@ -58,6 +58,7 @@ ApplicationWindow {
             }
             color: "white"
 
+            //Областьдля перетаскивания елементов из списка
             DropArea {
                 id: dragTarget
                 anchors.fill: parent

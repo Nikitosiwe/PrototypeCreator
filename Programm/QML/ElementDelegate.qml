@@ -1,5 +1,7 @@
 import QtQuick 2.0
 
+
+//Делегат для елементов списка
 Item {
     id: root
     width: dragArea.width
@@ -16,12 +18,12 @@ Item {
         drag.target: held ? content : undefined
         drag.axis: Drag.XandYAxis
 
-
-
         onPressed:  held = true
         onReleased: {content.Drag.drop(); held = false; }
 
 
+
+        //Содержимое елемента списка
         Rectangle {
             id: content
 
@@ -49,7 +51,7 @@ Item {
                     anchors { horizontalCenter: undefined; verticalCenter: undefined }
                 }
             }
-                Text { text: model.name }
+            Text { text: model.name }
         }
     }
 }
