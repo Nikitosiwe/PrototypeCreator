@@ -46,8 +46,8 @@ ApplicationWindow {
         }
 
 
-        //Пространство для проектирования прототипа
-        Rectangle{
+
+        Flickable {
             Layout.fillWidth: true
             z:0
             width:200
@@ -55,23 +55,63 @@ ApplicationWindow {
             anchors{
                 top: parent.top
                 bottom: parent.bottom
+                margins: 10
             }
-            color: "white"
+            contentWidth: createPlace.width*createPlace.scale
+            contentHeight: createPlace.height*createPlace.scale
 
-            //Областьдля перетаскивания елементов из списка
-            DropArea {
-                id: dragTarget
-                anchors.fill: parent
+            Rectangle{
+                id: createPlace
+                transformOrigin: Item.TopLeft
+                x: 0; y: 0;
+                width:600
+                height: 600
+                color: "white"
 
-                onEntered: {
-                    parent.color = "green"
+                Rectangle {
+                    x:0; y:0
+                    width: 100
+                    height: 100
+                    color: "red"
+
                 }
-                onExited: {
-                    parent.color = "red"
+                Rectangle {
+                    x:0; y:150
+                    width: 100
+                    height: 100
+                    color: "red"
+                }
+                Rectangle {
+                    x:0; y:300
+                    width: 100
+                    height: 100
+                    color: "red"
+                }
+
+
+                //Областьдля перетаскивания елементов из списка
+                DropArea {
+                    id: dragTarget
+                    anchors.fill: parent
+
+                    onEntered: {
+                        parent.color = "green"
+                    }
+                    onExited: {
+                        parent.color = "red"
+                    }
+                }
+
+                MouseArea{
+                    anchors.fill: parent
+                    onWheel:{
+                        if(wheel.angleDelta.y > 0)  // zoom in
+                            createPlace.scale += 0.2;
+                        else
+                            createPlace.scale -= 0.2;// zoom out
+                    }
                 }
             }
-
-
         }
     }
 
