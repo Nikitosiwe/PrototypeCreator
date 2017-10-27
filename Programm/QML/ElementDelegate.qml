@@ -27,6 +27,8 @@ Item {
         Rectangle {
             id: content
 
+            property var elementName: model.elementName
+
             Drag.active: dragArea.drag.active
             Drag.hotSpot.x: parent.width/2
             Drag.hotSpot.y: parent.height/2
