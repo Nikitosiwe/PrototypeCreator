@@ -22,7 +22,9 @@ ApplicationWindow {
 
         //Панель элементов
         Rectangle{
+            id: elementsPanel
             width: 200
+            visible: false
             z:1
             anchors{
                 top: parent.top
@@ -47,7 +49,7 @@ ApplicationWindow {
 
 
 
-        Flickable {
+        /*Flickable {
             Layout.fillWidth: true
             z:0
             width:200
@@ -100,6 +102,49 @@ ApplicationWindow {
                     }
                 }
             }
+        }*/ Rectangle {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            color: "white"
+            z:0
+
+
+
+
+            //Областьдля перетаскивания елементов из списка
+            DropArea {
+                id: dragTarget
+                anchors.fill: parent
+
+                onEntered: {
+                    //parent.color = "green"
+                }
+                onExited: {
+                    //parent.color = "red"
+                }
+                onDropped: {
+                    //parent.color = drag.source.color
+                    mainContext.printConsoleMessage(drag.source.elementName)
+                    var component = Qt.createComponent(drag.source.elementName+".qml");
+                    if (component.status == Component.Ready)
+                        component.createObject(parent, {"x": drag.x, "y": drag.y, "width": 100, "height":100});
+
+                }
+            }
+
+            MouseArea{
+                anchors.fill: parent
+                onDoubleClicked: {
+                    var component = Qt.createComponent("Page.qml");
+                    if (component.status == Component.Ready)
+                        component.createObject(parent, {"x": mouse.x, "y": mouse.y, "width": 100, "height":100});
+
+                }
+            }
+
         }
+
     }
 }
+
+
