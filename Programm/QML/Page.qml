@@ -7,10 +7,16 @@ Rectangle {
     property int rulersSize: page.width/15
     property color rulersColor: "transparent"
 
+    property bool isSelected: false
+
     property int minimumHeight: 100
     property int minimumWidth: 100
-    z:1
-    border.width: 2
+
+    property int  myScale: 6
+
+    z:0
+    //border.width: 1
+    //border.color: page.color
     radius: 10
     layer.enabled: true
     layer.effect: DropShadow {
@@ -19,6 +25,26 @@ Rectangle {
         //verticalOffset: 80
         radius: 5
     }
+
+   /* Rectangle{
+        width: 20;
+        height: 20;
+        x:10;
+        y:10;
+        color: "blue"
+    }
+
+    Rectangle{
+        width: 20;
+        height: 20;
+        x:page.width-30;
+        y:page.height-30;
+        color: "green"
+    }*/
+
+    state: "close"
+
+
 
     MouseArea{
         id: mouseArea
@@ -32,11 +58,17 @@ Rectangle {
                 margins: 5
             }
             drag{
-                target: page
+                target: !page.isSelected ? page : undefined
                 smoothed: false
             }
             onClicked: {
-                elementsPanel.visible = !elementsPanel.visible
+                //elementsPanel.visible = !elementsPanel.visible
+                page.isSelected = true
+                page.parent.selectedPage = page
+            }
+            onDoubleClicked: {
+                 //page.isSelected = false
+                //page.scale-=0.02
             }
 
             hoverEnabled: true
@@ -46,22 +78,50 @@ Rectangle {
     }
 
     states: [
-            State {
-                when: mouseAreaTopRight.drag.active || mouseAreaTopLeft.drag.active || mouseAreaBottomLeft.drag.active || mouseAreaBottomRight.drag.active
+            /*State {
+                when: (mouseAreaTopRight.drag.active || mouseAreaTopLeft.drag.active || mouseAreaBottomLeft.drag.active || mouseAreaBottomRight.drag.active) && page.state!="open"
                 PropertyChanges { target: page; border.color: "steelblue" }
             },
             State {
-                when: mouseAreaTopRight.containsMouse || mouseAreaTopLeft.containsMouse || mouseAreaBottomLeft.containsMouse || mouseAreaBottomRight.containsMouse
+                when: (mouseAreaTopRight.containsMouse || mouseAreaTopLeft.containsMouse || mouseAreaBottomLeft.containsMouse || mouseAreaBottomRight.containsMouse) && page.state!="open"
                 PropertyChanges { target: page; border.color: "steelblue" }
             },
             State {
-                when: !mouseArea.containsMouse
+                when: !mouseArea.containsMouse && page.state!="open"
                 PropertyChanges { target: page; border.color: "white" }
+            },*/
+            State {
+                name:"open"
+                when: page.isSelected
+                //PropertyChanges { target: page; color:"red"; width: page.parent.width-20; height: page.parent.height-20; x: 10; y: 10; z:1}
+                PropertyChanges { target: page; color:"red"; width:width * myScale; height: height * myScale; z:1}
+                AnchorChanges{target: page; anchors.horizontalCenter: page.parent.horizontalCenter; anchors.verticalCenter: page.parent.verticalCenter}
             }
         ]
 
 
+    DropArea {
+        id: dragTarget
+        anchors.fill: parent
 
+        onEntered: {
+            //parent.color = "green"
+        }
+        onExited: {
+            //parent.color = "red"
+        }
+        onDropped: {
+            //parent.color = drag.source.color
+            mainContext.printConsoleMessage(drag.source.elementName)
+            var component = Qt.createComponent(drag.source.elementName+".qml");
+            if (component.status == Component.Ready)
+                component.createObject(parent, {"x": drag.x, "y": drag.y, "width":100, "height":100});
+
+        }
+    }
+
+
+/*
     //Top Left
     Rectangle {
         width: rulersSize
@@ -240,7 +300,7 @@ Rectangle {
             }
         }
     }
-
+*/
 
 
 

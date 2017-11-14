@@ -9,6 +9,23 @@ Rectangle {
     property int minimumHeight: 20
     property int minimumWidth: 20
 
+    property int myScale: parent.myScale
+
+
+    property int relHeight: 1
+    property int relWidth: 1
+
+    property int relX: 1
+    property int relY: 1
+
+/*
+    width: parent.width/relWidth
+    height: parent.height/relHeight
+
+    x:relX
+    y:relY*/
+
+
     color: "#354682B4"
 
     border {
@@ -31,6 +48,12 @@ Rectangle {
         onClicked: {
             parent.isSelect = !parent.isSelect
         }
+        onMouseXChanged: {
+            selComp.relX = selComp.parent.width/selComp.x
+        }
+        onMouseYChanged: {
+            selComp.relY = selComp.parent.height/selComp.y
+        }
 
         onDoubleClicked: {
             parent.destroy()        // destroy component
@@ -38,6 +61,23 @@ Rectangle {
     }
 
 
+
+    states: [
+            State {
+                name:"close"
+                when: parent.state==""
+                PropertyChanges {
+                    target: selComp;
+                    color:"green";
+                    x:x/selComp.myScale;
+                    y:y/selComp.myScale;
+                    width:width/selComp.myScale;
+                    height:height/selComp.myScale;
+                }
+            }
+        ]
+
+/*
     //Top Left
     Rectangle {
         width: rulersSize
@@ -200,7 +240,7 @@ Rectangle {
                }
             }
         }
-    }
+    }*/
 
 
 }
