@@ -23,8 +23,9 @@ ApplicationWindow {
         //Панель элементов
         Rectangle{
             id: elementsPanel
+
             width: 200
-            visible: false
+            visible: true
             z:1
             anchors{
                 top: parent.top
@@ -103,16 +104,18 @@ ApplicationWindow {
                 }
             }
         }*/ Rectangle {
+            id: prototypingArea
             Layout.fillWidth: true
             Layout.fillHeight: true
             color: "white"
             z:0
 
+            property Page selectedPage;
 
 
 
             //Областьдля перетаскивания елементов из списка
-            DropArea {
+            /*DropArea {
                 id: dragTarget
                 anchors.fill: parent
 
@@ -130,15 +133,20 @@ ApplicationWindow {
                         component.createObject(parent, {"x": drag.x, "y": drag.y, "width": 100, "height":100});
 
                 }
-            }
+            }*/
 
             MouseArea{
                 anchors.fill: parent
                 onDoubleClicked: {
                     var component = Qt.createComponent("Page.qml");
                     if (component.status == Component.Ready)
-                        component.createObject(parent, {"x": mouse.x, "y": mouse.y, "width": 100, "height":100});
+                        component.createObject(parent, {"x": mouse.x, "y": mouse.y, "myScale": 6, "width": parent.width/6-3, "height":parent.height/6-3});
 
+                }
+                onClicked: {
+                    if(parent.selectedPage != undefined){
+                        parent.selectedPage.isSelected = false
+                    }
                 }
             }
 
