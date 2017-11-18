@@ -2,8 +2,10 @@ import QtQuick 2.0
 
 Rectangle {
     id: selComp
+
+    property string type: "element"
     property bool isSelect: true
-    property int rulersSize: 15
+    property int rulersSize: 5
     property color rulersColor: "steelblue"
 
     property int minimumHeight: 20
@@ -18,6 +20,8 @@ Rectangle {
     property int relX: 1
     property int relY: 1
 
+
+
 /*
     width: parent.width/relWidth
     height: parent.height/relHeight
@@ -26,7 +30,7 @@ Rectangle {
     y:relY*/
 
 
-    color: "#354682B4"
+    color: "#354682"
 
     border {
         width: 1
@@ -46,7 +50,8 @@ Rectangle {
             smoothed: false
         }
         onClicked: {
-            parent.isSelect = !parent.isSelect
+            if(parent.state!="close")
+                parent.isSelect = !parent.isSelect
         }
         onMouseXChanged: {
             selComp.relX = selComp.parent.width/selComp.x
@@ -68,16 +73,17 @@ Rectangle {
                 when: parent.state==""
                 PropertyChanges {
                     target: selComp;
-                    color:"green";
+                    //color:"green";
                     x:x/selComp.myScale;
                     y:y/selComp.myScale;
                     width:width/selComp.myScale;
                     height:height/selComp.myScale;
+                    isSelect: true;
                 }
             }
         ]
 
-/*
+
     //Top Left
     Rectangle {
         width: rulersSize
@@ -240,7 +246,7 @@ Rectangle {
                }
             }
         }
-    }*/
+    }
 
 
 }
