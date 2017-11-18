@@ -14,6 +14,10 @@ class Context(QObject):
     def printConsoleMessage(self, text):
         print(text)
 
+    @pyqtSlot()
+    def showPreview(self):
+        view1 = QQuickView()
+        view1.setSource(QUrl('QML/PreviewWindow.qml'))
 
 
 if __name__ == '__main__':
