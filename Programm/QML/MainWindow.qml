@@ -107,33 +107,11 @@ ApplicationWindow {
             id: prototypingArea
             Layout.fillWidth: true
             Layout.fillHeight: true
-            color: "white"
+            color: "lightgrey"
             z:0
 
             property Page selectedPage;
 
-
-
-            //Областьдля перетаскивания елементов из списка
-            /*DropArea {
-                id: dragTarget
-                anchors.fill: parent
-
-                onEntered: {
-                    //parent.color = "green"
-                }
-                onExited: {
-                    //parent.color = "red"
-                }
-                onDropped: {
-                    //parent.color = drag.source.color
-                    mainContext.printConsoleMessage(drag.source.elementName)
-                    var component = Qt.createComponent(drag.source.elementName+".qml");
-                    if (component.status == Component.Ready)
-                        component.createObject(parent, {"x": drag.x, "y": drag.y, "width": 100, "height":100});
-
-                }
-            }*/
 
             MouseArea{
                 anchors.fill: parent
@@ -147,6 +125,16 @@ ApplicationWindow {
                     if(parent.selectedPage != undefined){
                         parent.selectedPage.isSelected = false
                     }
+                }
+            }
+
+            Button{
+                id:buttonShowPreview
+                width: 100
+                height: 30
+                text: qsTr("Предпросмотр")
+                onClicked: {
+                    mainContext.showPreview();
                 }
             }
 
