@@ -13,6 +13,7 @@ Rectangle {
     property int minimumWidth: 100
 
     property int  myScale: 6
+    property int elementId:0
 
     z:0
     //border.width: 1
@@ -112,12 +113,32 @@ Rectangle {
         }
         onDropped: {
             //parent.color = drag.source.color
-            mainContext.printConsoleMessage(drag.source.elementName)
-            var component = Qt.createComponent(drag.source.elementName+".qml");
-            if (component.status == Component.Ready)
-                component.createObject(parent, {"x": drag.x, "y": drag.y, "width":100, "height":100});
+
+            mainContext.addElementToPage(drag.source.elementName, page.elementId, drag.x, drag.y, 100, 100, "color");
+
+
 
         }
+    }
+
+    function addElement(ElementName, X, Y, pageId){
+        if (pageId==page.elementId){
+            var component = Qt.createComponent(ElementName+".qml");
+            if (component.status == Component.Ready)
+                component.createObject(page, {"x": X, "y": Y, "width":100, "height":100});
+
+
+            mainContext.printConsoleMessage(ElementName);
+        }
+    }
+
+    Connections {
+        target: mainContext
+
+        // Sum signal handler
+        onAddElementToPageSignal: {
+          page.addElement(ElementName, X, Y, pageID);
+       }
     }
 
 
