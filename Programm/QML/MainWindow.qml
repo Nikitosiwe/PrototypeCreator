@@ -116,10 +116,7 @@ ApplicationWindow {
             MouseArea{
                 anchors.fill: parent
                 onDoubleClicked: {
-                    var component = Qt.createComponent("Page.qml");
-                    if (component.status == Component.Ready)
-                        component.createObject(parent, {"x": mouse.x, "y": mouse.y, "myScale": 6, "width": parent.width/6-3, "height":parent.height/6-3});
-
+                   mainContext.createPage(mouse.x, mouse.y, parent.width/6-3, parent.height/6-3, "white")
                 }
                 onClicked: {
                     if(parent.selectedPage != undefined){
@@ -138,9 +135,27 @@ ApplicationWindow {
                 }
             }
 
+            function createPage(ID,X,Y){
+                var component = Qt.createComponent("Page.qml");
+                if (component.status == Component.Ready)
+                    component.createObject(prototypingArea, {"elementId": ID,"x": X, "y": Y, "myScale": 6, "width": prototypingArea.width/6-3, "height":prototypingArea.height/6-3});
+            }
+
         }
 
     }
+    Connections {
+        target: mainContext
+
+        // Sum signal handler
+        onCreatePageSignal: {
+           prototypingArea.createPage(ID,X,Y);
+       }
+
+
+    }
+
+
 }
 
 
