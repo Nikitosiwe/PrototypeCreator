@@ -13,12 +13,16 @@ Rectangle {
 
     property int myScale: parent.myScale
 
+    property int linkId: 2
+
 
     property int relHeight: 1
     property int relWidth: 1
 
     property int relX: 1
     property int relY: 1
+
+    property string elementName: "rectangleBlock"
 
 
 

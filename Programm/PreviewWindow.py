@@ -10,6 +10,12 @@ class PreviewWindow(QQuickView):
     def __init__(self, parent=None):
         QQuickView.__init__(self, parent)
 
+        self.parent = parent
         self.setSource(QUrl('QML/PreviewWindow.qml'))
-        self.previewContext = CP.ContextPreview()
+        self.previewContext = CP.ContextPreview(self)
         self.rootContext().setContextProperty("previewContext", self.previewContext)
+
+
+
+
+

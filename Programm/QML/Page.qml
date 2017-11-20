@@ -114,7 +114,7 @@ Rectangle {
         onDropped: {
             //parent.color = drag.source.color
 
-            mainContext.addElementToPage(drag.source.elementName, page.elementId, drag.x, drag.y, 100, 100, "color");
+            mainContext.addElementToPage(0,drag.source.elementName, page.elementId, drag.x, drag.y, 100, 100, "green");
 
 
 
