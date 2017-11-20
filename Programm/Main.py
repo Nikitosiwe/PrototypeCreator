@@ -20,14 +20,7 @@ class MainWindow(QQuickView):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    # Объект QQuickView, в который грузится UI для отображения
-   # view = QQuickView()
-   # view.setSource(QUrl('QML/MainWindow.qml'))
-
-   # mainContext = Context()
-   # view.rootContext().setContextProperty("mainContext", mainContext)
 
     mainWindow = MainWindow()
 
-    #mainWindow.show()
     sys.exit(app.exec_())
