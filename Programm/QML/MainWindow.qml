@@ -116,7 +116,7 @@ ApplicationWindow {
             MouseArea{
                 anchors.fill: parent
                 onDoubleClicked: {
-                   mainContext.createPage(mouse.x, mouse.y, parent.width/6-3, parent.height/6-3, "white")
+                   mainContext.createPage(0, mouse.x, mouse.y, parent.width/6-3, parent.height/6-3, "white")
                 }
                 onClicked: {
                     if(parent.selectedPage != undefined){
@@ -131,9 +131,31 @@ ApplicationWindow {
                 height: 30
                 text: qsTr("Предпросмотр")
                 onClicked: {
+                    //
+                    prototypingArea.updateModel();
                     mainContext.showPreview();
                 }
             }
+
+            function updateModel(){
+                mainContext.clearModel()
+                for(var i=0; i<prototypingArea.children.length;i++){
+                    var p = prototypingArea.children[i];
+                    if(p.elementId>0){
+                        mainContext.printConsoleMessage("page");
+                        mainContext.createPage(1, p.x, p.y, p.width, p.height, p.color)
+                        for(var j=0;j<p.children.length;j++){
+                            var el =p.children[j];
+                            if (el.type == "element"){
+                                mainContext.printConsoleMessage(el.elementName);
+                                mainContext.addElementToPage(1,el.elementName,p.Id,el.x,el.y,el.width,el.height,el.color);
+                            }
+                        }
+                    }
+                }
+                 prototypingArea.color= "red"
+            }
+
 
             function createPage(ID,X,Y){
                 var component = Qt.createComponent("Page.qml");
