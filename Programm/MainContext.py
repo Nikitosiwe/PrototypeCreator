@@ -28,10 +28,10 @@ class Context(QObject):
         if isPreview==0:
             self.createPageSignal.emit(id, x, y)
 
-    @pyqtSlot(int,str,int,int,int,int,int,str)
-    def addElementToPage(self,isPreview, elementName, pageId, x, y, width, height, color):
+    @pyqtSlot(int,str,int,int,int,int,int,str,int)
+    def addElementToPage(self,isPreview, elementName, pageId, x, y, width, height, color, linkId):
         #print("AddElement", self.pageList)
-        self.pageList[pageId-1].addElement(elementName, x, y, width, height , color)
+        self.pageList[pageId-1].addElement(elementName, x, y, width, height , color, linkId)
         if isPreview == 0:
             self.addElementToPageSignal.emit(elementName, x, y, pageId)
 
