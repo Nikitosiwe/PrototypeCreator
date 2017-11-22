@@ -24,15 +24,19 @@ Rectangle {
     anchors.centerIn: parent
 
 
-    function createElementPreview(PageID,ElementName,X,Y,Width,Height,Color){
+    function createElementPreview(PageID,ElementName,X,Y,Width,Height,Color,LinkID){
+
+
         if (PageID==page_Preview.pageId){
-            page_Preview.color = "red";
+            //previewContext.printConsoleMessage("asdasda"+ElementName);
+            //page_Preview.color = "red";
             //previewContext.printConsoleMessage("asdasda"+ElementName);
             var s =page_Preview.myScale;
             //previewContext.printConsoleMessage(s);
             var component = Qt.createComponent(ElementName+"_Preview.qml");
             if (component.status == Component.Ready)
-                component.createObject(page_Preview, {"x": X * s, "y": Y * s, "width":Width * s, "height":Height * s, "color": Color});
+                component.createObject(page_Preview, {"x": X * s, "y": Y * s, "width":Width * s, "height":Height * s, "color": Color, "linkId":LinkID});
+
         }
 
     }
@@ -44,7 +48,7 @@ Rectangle {
         // Sum signal handler
         onCreateElementPreviewSignal: {
 
-           page_Preview.createElementPreview(PageID,ElementName,X,Y,Width,Height,Color)
+           page_Preview.createElementPreview(PageID,ElementName,X,Y,Width,Height,Color,LinkID)
 
        }
     }
