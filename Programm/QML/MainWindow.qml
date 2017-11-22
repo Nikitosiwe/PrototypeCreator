@@ -112,6 +112,8 @@ ApplicationWindow {
 
             property Page selectedPage;
 
+            property var selectedElement;
+
 
             MouseArea{
                 anchors.fill: parent
@@ -120,6 +122,9 @@ ApplicationWindow {
                 }
                 onClicked: {
                     if(parent.selectedPage != undefined){
+                        if (prototypingArea.selectedElement!=null)
+                            prototypingArea.selectedElement.isSelect = false
+                        prototypingArea.selectedElement = null
                         parent.selectedPage.isSelected = false
                     }
                 }
@@ -137,6 +142,9 @@ ApplicationWindow {
                 }
             }
 
+
+            Element_ContextMenu{}
+
             function updateModel(){
                 mainContext.clearModel()
                 for(var i=0; i<prototypingArea.children.length;i++){
@@ -148,7 +156,7 @@ ApplicationWindow {
                             var el =p.children[j];
                             if (el.type == "element"){
                                 mainContext.printConsoleMessage(el.elementName);
-                                mainContext.addElementToPage(1,el.elementName,p.Id,el.x,el.y,el.width,el.height,el.color);
+                                mainContext.addElementToPage(1,el.elementName,p.Id,el.x,el.y,el.width,el.height,el.color,el.linkId);
                             }
                         }
                     }
