@@ -3,7 +3,7 @@ import QtQuick 2.0
 Rectangle {
     id: rectangleBlock
 
-     property int linkId: 0
+     property int linkId: 2
 
 
     MouseArea{

@@ -38,7 +38,8 @@ ApplicationWindow {
         var component = Qt.createComponent("Page_Preview.qml");
         if (component.status == Component.Ready)
             component.createObject(fon, {"pageId":PageId, "visible": v, "width": Width * myScale, "height": Height * myScale, "color":Color});
-    }
+
+}
 
 
     function changeLink(LinkId){

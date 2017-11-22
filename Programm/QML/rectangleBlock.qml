@@ -1,10 +1,11 @@
 import QtQuick 2.0
 
+
 Rectangle {
     id: selComp
 
     property string type: "element"
-    property bool isSelect: true
+    property bool isSelect: false
     property int rulersSize: 5
     property color rulersColor: "steelblue"
 
@@ -13,7 +14,7 @@ Rectangle {
 
     property int myScale: parent.myScale
 
-    property int linkId: 2
+    property int linkId: 0
 
 
     property int relHeight: 1
@@ -46,7 +47,7 @@ Rectangle {
     MouseArea {     // drag mouse area
         anchors.fill: parent
         drag{
-            target: parent.isSelect ? undefined : parent
+            target: parent.isSelect ? parent : undefined
             minimumX: - parent.width/2
             minimumY: - parent.height/2
             maximumX: parent.parent.width - parent.width/2
@@ -54,8 +55,25 @@ Rectangle {
             smoothed: false
         }
         onClicked: {
-            if(parent.state!="close")
+            if(parent.state!="close"){
+
+                if(selComp.parent.parent.selectedElement != selComp){
+                    if(selComp.parent.parent.selectedElement==null){
+                        selComp.parent.parent.selectedElement = selComp
+
+                    }else{
+                        //selComp.parent.parent.selectedElement.color= "red"
+                        selComp.parent.parent.selectedElement.isSelect = false
+                        selComp.parent.parent.selectedElement = selComp
+                    }
+                }else{
+                    selComp.parent.parent.selectedElement = null
+                }
+
                 parent.isSelect = !parent.isSelect
+
+            }
+
         }
         onMouseXChanged: {
             selComp.relX = selComp.parent.width/selComp.x
@@ -64,9 +82,7 @@ Rectangle {
             selComp.relY = selComp.parent.height/selComp.y
         }
 
-        onDoubleClicked: {
-            parent.destroy()        // destroy component
-        }
+
     }
 
 
@@ -82,10 +98,44 @@ Rectangle {
                     y:y/selComp.myScale;
                     width:width/selComp.myScale;
                     height:height/selComp.myScale;
-                    isSelect: true;
+                    isSelect: false;
+                    z:0
                 }
             }
         ]
+
+
+
+
+
+
+    /*Canvas {
+                id: root
+                // canvas size
+                width: parent.width; height: parent.height
+                // handler to override for drawing
+                onPaint: {
+                    // get context to draw with
+                    var ctx = getContext("2d")
+                    // setup the stroke
+                    ctx.lineWidth = 4
+                    ctx.strokeStyle = "blue"
+                    // setup the fill
+                    ctx.fillStyle = "steelblue"
+                    // begin a new path to draw
+                    ctx.beginPath()
+                    // top-left start point
+                    ctx.moveTo(root.x,root.y)
+                    // upper line
+                    ctx.lineTo(root.width,root.height)
+                    // left line through path closing
+                    ctx.closePath()
+                    // fill using fill style
+                    ctx.fill()
+                    // stroke using line width and stroke style
+                    ctx.stroke()
+                }
+            }*/
 
 
     //Top Left
@@ -98,7 +148,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.topMargin: -rulersSize/2
         anchors.leftMargin: -rulersSize/2
-        visible: !parent.isSelect
+        visible: parent.isSelect
 
         MouseArea {
             anchors.fill: parent
@@ -141,7 +191,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.topMargin: -rulersSize/2
         anchors.rightMargin: -rulersSize/2
-        visible: !parent.isSelect
+        visible: parent.isSelect
 
         MouseArea {
             anchors.fill: parent
@@ -182,7 +232,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.leftMargin: -rulersSize/2
         anchors.bottomMargin: -rulersSize/2
-        visible: !parent.isSelect
+        visible: parent.isSelect
 
         MouseArea {
             anchors.fill: parent
@@ -222,7 +272,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.rightMargin: -rulersSize/2
         anchors.bottomMargin: -rulersSize/2
-        visible: !parent.isSelect
+        visible: parent.isSelect
 
         MouseArea {
             anchors.fill: parent
