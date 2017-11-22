@@ -161,7 +161,7 @@ ApplicationWindow {
                         }
                     }
                 }
-                 prototypingArea.color= "red"
+                 //prototypingArea.color= "red"
             }
 
 
