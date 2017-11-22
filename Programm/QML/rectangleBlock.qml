@@ -9,8 +9,8 @@ Rectangle {
     property int rulersSize: 5
     property color rulersColor: "steelblue"
 
-    property int minimumHeight: 20
-    property int minimumWidth: 20
+    property int minimumHeight: 10
+    property int minimumWidth: 10
 
     property int myScale: parent.myScale
 
