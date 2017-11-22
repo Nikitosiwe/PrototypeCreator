@@ -10,10 +10,10 @@ class PageModel():
         self.color = color
         self.elementList =[]
 
-    def addElement(self, elementName, x, y, width, height, color):
+    def addElement(self, elementName, x, y, width, height, color, linkId):
         id =1
         if len(self.elementList)>0:
             id = self.elementList[-1].id + 1
-        element = EM.ElementModel(id, elementName, x, y, width, height, color)
+        element = EM.ElementModel(id, elementName, x, y, width, height, color, linkId)
         self.elementList.append(element)
 
