@@ -51,6 +51,7 @@ Rectangle {
         id: mouseArea
         hoverEnabled: true
         anchors.fill: parent
+        z:1
 
         MouseArea{
             id: mouseArea2
@@ -96,6 +97,7 @@ Rectangle {
                 when: page.isSelected
                 //PropertyChanges { target: page; color:"red"; width: page.parent.width-20; height: page.parent.height-20; x: 10; y: 10; z:1}
                 PropertyChanges { target: page; /*color:"red";*/ width:width * myScale; height: height * myScale; z:1}
+                PropertyChanges { target: mouseArea; z:0}
                 AnchorChanges{target: page; anchors.horizontalCenter: page.parent.horizontalCenter; anchors.verticalCenter: page.parent.verticalCenter}
             }
         ]
@@ -114,7 +116,7 @@ Rectangle {
         onDropped: {
             //parent.color = drag.source.color
 
-            mainContext.addElementToPage(0,drag.source.elementName, page.elementId, drag.x, drag.y, 100, 100, "green");
+            mainContext.addElementToPage(0,drag.source.elementName, page.elementId, drag.x, drag.y, 100, 100, "green", 0);
 
 
 
